@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import entities.Contract;
 import service.ContractService;
+import service.PaypalService;
 
 
 
@@ -26,8 +27,9 @@ public class Application {
 		double contractValue = scanner.nextDouble();
 		System.out.print("Entre com o número de parcelas: ");
 		int contractInstallments = scanner.nextInt();
+		
 		Contract contract = new Contract(contractNumber,contractDate, contractValue);
-		ContractService service = new ContractService();
+		ContractService service = new ContractService(new PaypalService());
 		service.processContract(contract, contractInstallments);
 		
 		System.out.println("Parcelas: ");

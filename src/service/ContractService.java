@@ -6,13 +6,22 @@ import entities.Contract;
 import entities.Installment;
 
 public class ContractService {
+	
+	private OnlinePaymentService onlinePaymentService;
+	
+	public ContractService(OnlinePaymentService onlinePaymentService) {
+		this.onlinePaymentService = onlinePaymentService;
+	}
+
 	public void processContract(Contract contract, Integer months) {
-		OnlinePaymentService service = new PaypalService();
+	
+		
+		double baseInstallmentValue = contract.getTotalValue()  / months;
 		
 		for (int i = 1; i <= months; i++) {
-			double baseInstallmentValue = contract.getTotalValue()  / months;
-			double interest = service.interest(baseInstallmentValue, i);
-			double paymentFee = service.paymentFee(interest + baseInstallmentValue);
+			
+			double interest = onlinePaymentService.interest(baseInstallmentValue, i);
+			double paymentFee = onlinePaymentService.paymentFee(interest + baseInstallmentValue);
 			double amount = baseInstallmentValue + interest + paymentFee;
 
 			LocalDate dueDate = contract.getDate().plusMonths(i);

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Installment {
-	DateTimeFormatter fmt =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static DateTimeFormatter fmt =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private LocalDate dueDate;
 	private Double amount;
 	
